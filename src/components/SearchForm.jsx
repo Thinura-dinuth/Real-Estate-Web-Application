@@ -1,73 +1,73 @@
 import React from 'react';
+import { DropdownList, NumberPicker, DateTimePicker } from 'react-widgets';
+import 'react-widgets/styles.css';
+
+const propertyTypes = ['Any', 'House', 'Flat'];
 
 const SearchForm = ({ searchCriteria, handleInputChange, handleSubmit }) => (
     <form onSubmit={handleSubmit} className="search-form">
         <div className="form-group">
             <label htmlFor="type">Property Type:</label>
-            <select id="type" name="type" value={searchCriteria.type} onChange={handleInputChange}>
-                <option value="any">Any</option>
-                <option value="house">House</option>
-                <option value="flat">Flat</option>
-            </select>
+            <DropdownList
+                id="type"
+                name="type"
+                data={propertyTypes}
+                value={searchCriteria.type}
+                onChange={(value) => handleInputChange({ target: { name: 'type', value } })}
+            />
         </div>
 
         <div className="form-group">
             <label htmlFor="minPrice">Min Price (£):</label>
-            <input
-                type="number"
+            <NumberPicker
                 id="minPrice"
                 name="minPrice"
                 value={searchCriteria.minPrice}
-                onChange={handleInputChange}
+                onChange={(value) => handleInputChange({ target: { name: 'minPrice', value } })}
             />
 
             <label htmlFor="maxPrice">Max Price (£):</label>
-            <input
-                type="number"
+            <NumberPicker
                 id="maxPrice"
                 name="maxPrice"
                 value={searchCriteria.maxPrice}
-                onChange={handleInputChange}
+                onChange={(value) => handleInputChange({ target: { name: 'maxPrice', value } })}
             />
         </div>
 
         <div className="form-group">
             <label htmlFor="minBedrooms">Min Bedrooms:</label>
-            <input
-                type="number"
+            <NumberPicker
                 id="minBedrooms"
                 name="minBedrooms"
                 value={searchCriteria.minBedrooms}
-                onChange={handleInputChange}
+                onChange={(value) => handleInputChange({ target: { name: 'minBedrooms', value } })}
             />
 
             <label htmlFor="maxBedrooms">Max Bedrooms:</label>
-            <input
-                type="number"
+            <NumberPicker
                 id="maxBedrooms"
                 name="maxBedrooms"
                 value={searchCriteria.maxBedrooms}
-                onChange={handleInputChange}
+                onChange={(value) => handleInputChange({ target: { name: 'maxBedrooms', value } })}
             />
         </div>
 
         <div className="form-group">
             <label htmlFor="startDate">Date Added After:</label>
-            <input
-                type="date"
+            <DateTimePicker
                 id="startDate"
                 name="startDate"
                 value={searchCriteria.startDate}
-                onChange={handleInputChange}
+                onChange={(value) => handleInputChange({ target: { name: 'startDate', value } })}
             />
 
             <label htmlFor="endDate">Date Added Before:</label>
-            <input
-                type="date"
+            <DateTimePicker
                 id="endDate"
                 name="endDate"
                 value={searchCriteria.endDate}
-                onChange={handleInputChange}
+                onChange={(value) => handleInputChange({ target: { name: 'endDate', value } })}
             />
         </div>
 

@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import propertiesData from '../properties.json';
-import PropertySearch from './PropertySearch';
-import PropertyList from './PropertyList';
+import { BasicSearch } from './BasicSearch.jsx';
+import { PropertyResults } from './PropertyResults.jsx';
+import { FavouritesList } from './FavouritesList.jsx';
+import { PropertyDetails } from './PropertyDetails.jsx';
+import PropertySearch from './PropertySearch.jsx'; // Ensure PropertySearch is imported
 
 const SearchBar = () => {
     const [searchText, setSearchText] = useState('');
     const [showAdvancedOptions, setShowAdvancedOptions] = useState(false);
     const [filteredProperties, setFilteredProperties] = useState(propertiesData.properties);
+    const [selectedProperty, setSelectedProperty] = useState(null);
+    const [favouriteProperties, setFavouriteProperties] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
-    const [activeSearch, setActiveSearch] = useState('basic');
 
     useEffect(() => {
         setFilteredProperties(propertiesData.properties);
@@ -19,7 +23,6 @@ const SearchBar = () => {
     };
 
     const handleSearch = () => {
-        setActiveSearch('basic');
         const filtered = propertiesData.properties.filter((property) =>
             property.type.toLowerCase().includes(searchText.toLowerCase())
         );
@@ -31,28 +34,53 @@ const SearchBar = () => {
         setSearchText('');
         setFilteredProperties(propertiesData.properties);
         setErrorMessage('');
+        setSelectedProperty(null);
+    };
+
+    const handlePropertySelect = (property) => {
+        setSelectedProperty(property);
     };
 
     const toggleAdvancedOptions = () => {
         setShowAdvancedOptions((prevState) => !prevState);
     };
 
+    const toggleFavourite = (property) => {
+        const isFavourite = favouriteProperties.some((fav) => fav.id === property.id);
+        if (isFavourite) {
+            setFavouriteProperties((prevState) => prevState.filter((fav) => fav.id !== property.id));
+        } else {
+            setFavouriteProperties((prevState) => [...prevState, property]);
+        }
+    };
+
+    const handleDragStart = (property, event) => {
+        event.dataTransfer.setData('propertyId', property.id);
+    };
+
+    const handleDrop = (event) => {
+        const propertyId = event.dataTransfer.getData('propertyId');
+        const property = filteredProperties.find((prop) => prop.id === propertyId);
+        if (property && !favouriteProperties.some((fav) => fav.id === property.id)) {
+            setFavouriteProperties((prevState) => [...prevState, property]);
+        }
+        event.preventDefault();
+    };
+
+    const allowDrop = (event) => {
+        event.preventDefault();
+    };
+
     return (
         <div className="search-bar">
             <h1>Search Properties</h1>
             {!showAdvancedOptions && (
-                <div className="basic-search">
-                    <label htmlFor="searchText">Search by Property Type:</label>
-                    <input
-                        type="text"
-                        id="searchText"
-                        value={searchText}
-                        onChange={handleInputChange}
-                        placeholder="Enter property type (e.g., House, Flat)"
-                    />
-                    <button onClick={handleSearch} className="search-button">Search</button>
-                    <button onClick={handleReset} className="reset-button">Reset</button>
-                </div>
+                <BasicSearch
+                    searchText={searchText}
+                    onInputChange={handleInputChange}
+                    onSearch={handleSearch}
+                    onReset={handleReset}
+                />
             )}
             <button onClick={toggleAdvancedOptions} className="advanced-options-button">
                 {showAdvancedOptions ? 'Hide Advanced Options' : 'Show Advanced Options'}
@@ -60,12 +88,30 @@ const SearchBar = () => {
 
             {showAdvancedOptions && (
                 <div className="advanced-options">
-                    <PropertySearch setActiveSearch={setActiveSearch} setFilteredProperties={setFilteredProperties} setErrorMessage={setErrorMessage} />
+                    <PropertySearch
+                        setActiveSearch={() => {}}
+                        setFilteredProperties={setFilteredProperties}
+                        setErrorMessage={setErrorMessage}
+                    />
                 </div>
             )}
 
             {errorMessage && <p className="error-message">{errorMessage}</p>}
-            <PropertyList properties={filteredProperties} />
+
+            <div className="property-lists">
+                <PropertyResults
+                    properties={filteredProperties}
+                    onDragStart={handleDragStart}
+                    onToggleFavourite={toggleFavourite}
+                    favouriteIds={favouriteProperties.map((prop) => prop.id)}
+                    onSelectProperty={handlePropertySelect}
+                />
+                <FavouritesList
+                    favourites={favouriteProperties}
+                    onDrop={handleDrop}
+                    onDragOver={allowDrop}
+                />
+            </div>
         </div>
     );
 };

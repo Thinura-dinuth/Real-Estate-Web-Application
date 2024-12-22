@@ -2,7 +2,6 @@ import React from 'react';
 
 const SearchResults = ({ filteredProperties }) => (
     <div className="results">
-        <h2>Search Results</h2>
         {filteredProperties.length > 0 ? (
             <ul>
                 {filteredProperties.map((property) => (
