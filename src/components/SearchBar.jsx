@@ -1,24 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import propertiesData from '../properties.json';
 import PropertySearch from './PropertySearch';
+import PropertyList from './PropertyList';
 
 const SearchBar = () => {
     const [searchText, setSearchText] = useState('');
     const [showAdvancedOptions, setShowAdvancedOptions] = useState(false);
-    const [filteredProperties, setFilteredProperties] = useState([]);
+    const [filteredProperties, setFilteredProperties] = useState(propertiesData.properties);
     const [errorMessage, setErrorMessage] = useState('');
+    const [activeSearch, setActiveSearch] = useState('basic');
+
+    useEffect(() => {
+        setFilteredProperties(propertiesData.properties);
+    }, []);
 
     const handleInputChange = (e) => {
         setSearchText(e.target.value);
     };
 
     const handleSearch = () => {
+        setActiveSearch('basic');
         const filtered = propertiesData.properties.filter((property) =>
             property.type.toLowerCase().includes(searchText.toLowerCase())
         );
         setFilteredProperties(filtered);
         setErrorMessage(filtered.length === 0 ? 'No properties match the search criteria.' : '');
-        console.log('Filtered properties:', filtered);
+    };
+
+    const handleReset = () => {
+        setSearchText('');
+        setFilteredProperties(propertiesData.properties);
+        setErrorMessage('');
     };
 
     const toggleAdvancedOptions = () => {
@@ -39,6 +51,7 @@ const SearchBar = () => {
                         placeholder="Enter property type (e.g., House, Flat)"
                     />
                     <button onClick={handleSearch} className="search-button">Search</button>
+                    <button onClick={handleReset} className="reset-button">Reset</button>
                 </div>
             )}
             <button onClick={toggleAdvancedOptions} className="advanced-options-button">
@@ -47,27 +60,12 @@ const SearchBar = () => {
 
             {showAdvancedOptions && (
                 <div className="advanced-options">
-                    <PropertySearch />
+                    <PropertySearch setActiveSearch={setActiveSearch} setFilteredProperties={setFilteredProperties} setErrorMessage={setErrorMessage} />
                 </div>
             )}
 
             {errorMessage && <p className="error-message">{errorMessage}</p>}
-            {filteredProperties.length > 0 && (
-                <div className="search-results">
-                    <h2>Search Results</h2>
-                    <ul>
-                        {filteredProperties.map((property) => (
-                            <li key={property.id}>
-                                <h3>{property.type} - {property.location}</h3>
-                                <p>Price: £{property.price}</p>
-                                <p>Bedrooms: {property.bedrooms}</p>
-                                <p>Date Added: {`${property.added.day} ${property.added.month} ${property.added.year}`}</p>
-                                <p>{property.description}</p>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            )}
+            <PropertyList properties={filteredProperties} />
         </div>
     );
 };
