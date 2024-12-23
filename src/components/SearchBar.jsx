@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import propertiesData from '../properties.json';
 import { BasicSearch } from './BasicSearch.jsx';
 import { PropertyResults } from './PropertyResults.jsx';
 import { FavouritesList } from './FavouritesList.jsx';
-import { PropertyDetails } from './PropertyDetails.jsx';
-import PropertySearch from './PropertySearch.jsx'; // Ensure PropertySearch is imported
+import PropertySearch from './PropertySearch.jsx';
+import PropertyDetailPage from './PropertyDetailPage.jsx';
 
 const SearchBar = () => {
     const [searchText, setSearchText] = useState('');
     const [showAdvancedOptions, setShowAdvancedOptions] = useState(false);
     const [filteredProperties, setFilteredProperties] = useState(propertiesData.properties);
-    const [selectedProperty, setSelectedProperty] = useState(null);
     const [favouriteProperties, setFavouriteProperties] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -34,11 +34,6 @@ const SearchBar = () => {
         setSearchText('');
         setFilteredProperties(propertiesData.properties);
         setErrorMessage('');
-        setSelectedProperty(null);
-    };
-
-    const handlePropertySelect = (property) => {
-        setSelectedProperty(property);
     };
 
     const toggleAdvancedOptions = () => {
@@ -72,47 +67,59 @@ const SearchBar = () => {
     };
 
     return (
-        <div className="search-bar">
-            <h1>Search Properties</h1>
-            {!showAdvancedOptions && (
-                <BasicSearch
-                    searchText={searchText}
-                    onInputChange={handleInputChange}
-                    onSearch={handleSearch}
-                    onReset={handleReset}
-                />
-            )}
-            <button onClick={toggleAdvancedOptions} className="advanced-options-button">
-                {showAdvancedOptions ? 'Hide Advanced Options' : 'Show Advanced Options'}
-            </button>
+        <Router>
+            <div className="search-bar">
+                <h1>Search Properties</h1>
+                {!showAdvancedOptions && (
+                    <BasicSearch
+                        searchText={searchText}
+                        onInputChange={handleInputChange}
+                        onSearch={handleSearch}
+                        onReset={handleReset}
+                    />
+                )}
+                <button onClick={toggleAdvancedOptions} className="advanced-options-button">
+                    {showAdvancedOptions ? 'Hide Advanced Options' : 'Show Advanced Options'}
+                </button>
 
-            {showAdvancedOptions && (
-                <div className="advanced-options">
-                    <PropertySearch
-                        setActiveSearch={() => {}}
-                        setFilteredProperties={setFilteredProperties}
-                        setErrorMessage={setErrorMessage}
+                {showAdvancedOptions && (
+                    <div className="advanced-options">
+                        <PropertySearch
+                            setActiveSearch={() => {}}
+                            setFilteredProperties={setFilteredProperties}
+                            setErrorMessage={setErrorMessage}
+                        />
+                    </div>
+                )}
+
+                {errorMessage && <p className="error-message">{errorMessage}</p>}
+
+                <div className="property-lists">
+                    <Routes>
+                        <Route
+                            path="/"
+                            element={
+                                <PropertyResults
+                                    properties={filteredProperties}
+                                    onDragStart={handleDragStart}
+                                    onToggleFavourite={toggleFavourite}
+                                    favouriteIds={favouriteProperties.map((prop) => prop.id)}
+                                />
+                            }
+                        />
+                        <Route
+                            path="/property/:id"
+                            element={<PropertyDetailPage properties={propertiesData.properties} />}
+                        />
+                    </Routes>
+                    <FavouritesList
+                        favourites={favouriteProperties}
+                        onDrop={handleDrop}
+                        onDragOver={allowDrop}
                     />
                 </div>
-            )}
-
-            {errorMessage && <p className="error-message">{errorMessage}</p>}
-
-            <div className="property-lists">
-                <PropertyResults
-                    properties={filteredProperties}
-                    onDragStart={handleDragStart}
-                    onToggleFavourite={toggleFavourite}
-                    favouriteIds={favouriteProperties.map((prop) => prop.id)}
-                    onSelectProperty={handlePropertySelect}
-                />
-                <FavouritesList
-                    favourites={favouriteProperties}
-                    onDrop={handleDrop}
-                    onDragOver={allowDrop}
-                />
             </div>
-        </div>
+        </Router>
     );
 };
 

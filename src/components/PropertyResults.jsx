@@ -1,13 +1,6 @@
-import React, { useState } from 'react';
-import { PropertyDetails } from './PropertyDetails.jsx';
+import { Link } from 'react-router-dom';
 
 export const PropertyResults = ({ properties, onDragStart, onToggleFavourite, favouriteIds }) => {
-    const [selectedPropertyId, setSelectedPropertyId] = useState(null);
-
-    const handleSelectProperty = (propertyId) => {
-        setSelectedPropertyId((prevId) => (prevId === propertyId ? null : propertyId));
-    };
-
     return (
         <div className="property-results">
             {properties.map((property) => (
@@ -29,10 +22,7 @@ export const PropertyResults = ({ properties, onDragStart, onToggleFavourite, fa
                     >
                         ♥
                     </span>
-                    <button onClick={() => handleSelectProperty(property.id)}>View Details</button>
-                    {selectedPropertyId === property.id && (
-                        <PropertyDetails property={property} />
-                    )}
+                    <Link to={`/property/${property.id}`} className="view-details-button">View Details</Link>
                 </div>
             ))}
         </div>
