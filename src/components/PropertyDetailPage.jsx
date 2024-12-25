@@ -2,6 +2,8 @@ import { useParams } from 'react-router-dom';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import PropTypes from 'prop-types';
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 const PropertyDetailPage = ({ properties }) => {
     const { id } = useParams();
@@ -21,7 +23,13 @@ const PropertyDetailPage = ({ properties }) => {
             </div>
 
             <div className="property-images">
-                <img src={property.images[0]} alt={`${property.type}`} className="main-image" />
+                <Carousel showThumbs={false} infiniteLoop useKeyboardArrows autoPlay>
+                    {property.images.map((image, index) => (
+                        <div key={index}>
+                            <img src={image} alt={`${property.type} image ${index + 1}`} />
+                        </div>
+                    ))}
+                </Carousel>
             </div>
 
             <Tabs>

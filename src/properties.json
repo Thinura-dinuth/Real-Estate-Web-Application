@@ -49,11 +49,11 @@
     {
       "id": "prop3",
       "type": "House",
-      "bedrooms": 4,
-      "price": 600000,
-      "tenure": "Leasehold",
-      "description": "A spacious four-bedroom detached house located in a quiet cul-de-sac, with a large garden and garage.",
-      "location": "Green Lane, Bromley BR2",
+      "bedrooms": 3,
+      "price": 360000,
+      "tenure": "Freehold",
+      "description": "This delightful three-bedroom house offers modern and versatile living, ideal for families or first-time buyers. The property features a master bedroom with an en-suite, two additional bedrooms, and a well-appointed family bathroom. The spacious sitting room and open-plan kitchen/dining area provide excellent spaces for relaxation and entertaining. Outside, the enclosed rear gardens offer a private outdoor retreat. The property also benefits from a garage and parking. Available with no onward chain, this home is ready for immediate occupancy.",
+      "location": "37, Collingwood Fields, East Bergholt, Colchester, Suffolk CO7 6QN",
       "images": [
         "src/assets/Prop3/img1.jpeg",
         "src/assets/Prop3/img2.jpeg",
@@ -72,11 +72,11 @@
     {
       "id": "prop4",
       "type": "Flat",
-      "bedrooms": 1,
-      "price": 250000,
+      "bedrooms": 3,
+      "price": 270000,
       "tenure": "Freehold",
-      "description": "Modern one-bedroom flat with an open-plan kitchen, ideal for young professionals.",
-      "location": "High Street, Lewisham SE13",
+      "description": "This charming three-bedroom flat offers a comfortable and practical living space, ideal for families. The property features a lounge and dining room, providing ample room for relaxation and entertaining. An attractive rear garden adds to its appeal, perfect for outdoor enjoyment. Additionally, the property includes a garage and a designated parking space. Situated in a popular village location, it combines a peaceful setting with easy access to local amenities.",
+      "location": "76, Broom Knoll, East Bergholt, Colchester, Suffolk CO7 6XN",
       "images": [
         "src/assets/Prop4/img1.jpeg",
         "src/assets/Prop4/img2.jpeg",
@@ -89,17 +89,17 @@
       "added": {
         "month": "July",
         "day": 25,
-        "year": 2023
+        "year": 2024
       }
     },
     {
       "id": "prop5",
-      "type": "House",
-      "bedrooms": 5,
-      "price": 1200000,
-      "tenure": "Freehold",
-      "description": "Luxury five-bedroom house with a private pool and state-of-the-art amenities.",
-      "location": "Kingswood Avenue, Chislehurst BR7",
+      "type": "Flat",
+      "bedrooms": 2,
+      "price": 243000,
+      "tenure": "Leasehold",
+      "description": "This spacious two-bedroom ground floor apartment spans two floors, offering a unique and practical layout. It features two generously sized double bedrooms and a private garden, perfect for outdoor relaxation. With excellent transport links nearby, the property ensures convenient connectivity. Available with no onward chain, this home is ideal for those seeking a ready-to-move-in opportunity.",
+      "location": "122, Cockerell Road, Cambridge, Cambridgeshire CB4 3RZ",
       "images": [
         "src/assets/Prop5/img1.jpeg",
         "src/assets/Prop5/img2.jpeg",
@@ -107,7 +107,7 @@
         "src/assets/Prop5/img4.jpeg",
         "src/assets/Prop5/img5.jpeg",
         "src/assets/Prop5/img6.jpeg",
-        "src/assets/Prop5/img7.jpeg"
+        "src/assets/Prop6/img7.jpeg"
       ],
       "added": {
         "month": "January",
@@ -117,12 +117,12 @@
     },
     {
       "id": "prop6",
-      "type": "Flat",
-      "bedrooms": 3,
-      "price": 450000,
-      "tenure": "Leasehold",
-      "description": "Bright and airy three-bedroom flat with a balcony overlooking the river.",
-      "location": "Riverside Walk, Greenwich SE10",
+      "type": "House",
+      "bedrooms": 7,
+      "price": 5262500,
+      "tenure": "Freehold",
+      "description": "This stunning Victorian house offers spacious living with seven bedrooms and three bathrooms, making it ideal for larger families or those who love to entertain. Situated within walking distance of Hampstead Heath, the property enjoys a prime location that combines natural beauty with urban convenience. It is close to a variety of shops and cafes, providing a vibrant lifestyle. Additionally, excellent transport links are easily accessible, ensuring effortless connectivity to other parts of the city.",
+      "location": "16, Nassington Road, London, Greater London NW3 2UD",
       "images": [
         "src/assets/Prop6/img1.jpeg",
         "src/assets/Prop6/img2.jpeg",
@@ -135,7 +135,7 @@
       "added": {
         "month": "November",
         "day": 30,
-        "year": 2022
+        "year": 2024
       }
     },
     {
@@ -144,7 +144,7 @@
       "bedrooms": 4,
       "price": 650000,
       "tenure": "Freehold",
-      "description": "Charming four-bedroom house with original features and a cozy fireplace.",
+      "description": "This well-maintained detached chalet bungalow offers comfortable and versatile living with four spacious bedrooms and two bathrooms. The property features a garage and convenient off-street parking, along with beautifully kept front and rear gardens, perfect for outdoor relaxation. Situated just a short walk from Feltham Mainline Station and Feltham High Street, it combines peaceful living with easy access to local amenities and excellent transport links.",
       "location": "Glencoe, Ashfield Avenue, Feltham, Greater London TW13 5BB",
       "images": [
         "src/assets/Prop7/img1.jpeg",
@@ -158,7 +158,7 @@
       "added": {
         "month": "May",
         "day": 18,
-        "year": 2023
+        "year": 2024
       }
     }
   ]
