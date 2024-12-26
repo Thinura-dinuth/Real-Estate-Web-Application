@@ -26,7 +26,7 @@ const PropertyDetailPage = ({ properties }) => {
                 <Carousel showThumbs={false} infiniteLoop useKeyboardArrows autoPlay>
                     {property.images.map((image, index) => (
                         <div key={index}>
-                            <img src={image} alt={`${property.type} image ${index + 1}`} />
+                            <img src={`/${image}`} alt={`${property.type} image ${index + 1}`} />
                         </div>
                     ))}
                 </Carousel>

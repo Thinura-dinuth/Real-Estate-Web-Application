@@ -99,12 +99,19 @@ const SearchBar = () => {
                         <Route
                             path="/"
                             element={
-                                <PropertyResults
-                                    properties={filteredProperties}
-                                    onDragStart={handleDragStart}
-                                    onToggleFavourite={toggleFavourite}
-                                    favouriteIds={favouriteProperties.map((prop) => prop.id)}
-                                />
+                                <>
+                                    <PropertyResults
+                                        properties={filteredProperties}
+                                        onDragStart={handleDragStart}
+                                        onToggleFavourite={toggleFavourite}
+                                        favouriteIds={favouriteProperties.map((prop) => prop.id)}
+                                    />
+                                    <FavouritesList
+                                        favourites={favouriteProperties}
+                                        onDrop={handleDrop}
+                                        onDragOver={allowDrop}
+                                    />
+                                </>
                             }
                         />
                         <Route
@@ -112,11 +119,6 @@ const SearchBar = () => {
                             element={<PropertyDetailPage properties={propertiesData.properties} />}
                         />
                     </Routes>
-                    <FavouritesList
-                        favourites={favouriteProperties}
-                        onDrop={handleDrop}
-                        onDragOver={allowDrop}
-                    />
                 </div>
             </div>
         </Router>
