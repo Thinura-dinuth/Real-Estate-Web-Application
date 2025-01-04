@@ -7,7 +7,7 @@ const propertyTypes = ['Any', 'House', 'Flat'];
 const SearchForm = ({ searchCriteria, handleInputChange, handleSubmit }) => (
     <form onSubmit={handleSubmit} className="search-form">
         <div className="form-group">
-            <label htmlFor="type">Property Type:</label>
+            <label htmlFor="type">{'Property Type:'}</label>
             <DropdownList
                 id="type"
                 name="type"
@@ -18,7 +18,7 @@ const SearchForm = ({ searchCriteria, handleInputChange, handleSubmit }) => (
         </div>
 
         <div className="form-group">
-            <label htmlFor="minPrice">Min Price (£):</label>
+            <label htmlFor="minPrice">{'Min Price (£):'}</label>
             <NumberPicker
                 id="minPrice"
                 name="minPrice"
@@ -26,7 +26,7 @@ const SearchForm = ({ searchCriteria, handleInputChange, handleSubmit }) => (
                 onChange={(value) => handleInputChange({ target: { name: 'minPrice', value } })}
             />
 
-            <label htmlFor="maxPrice">Max Price (£):</label>
+            <label htmlFor="maxPrice">{'Max Price (£):'}</label>
             <NumberPicker
                 id="maxPrice"
                 name="maxPrice"
@@ -36,7 +36,7 @@ const SearchForm = ({ searchCriteria, handleInputChange, handleSubmit }) => (
         </div>
 
         <div className="form-group">
-            <label htmlFor="minBedrooms">Min Bedrooms:</label>
+            <label htmlFor="minBedrooms">{'Min Bedrooms:'}</label>
             <NumberPicker
                 id="minBedrooms"
                 name="minBedrooms"
@@ -44,7 +44,7 @@ const SearchForm = ({ searchCriteria, handleInputChange, handleSubmit }) => (
                 onChange={(value) => handleInputChange({ target: { name: 'minBedrooms', value } })}
             />
 
-            <label htmlFor="maxBedrooms">Max Bedrooms:</label>
+            <label htmlFor="maxBedrooms">{'Max Bedrooms:'}</label>
             <NumberPicker
                 id="maxBedrooms"
                 name="maxBedrooms"
@@ -54,7 +54,7 @@ const SearchForm = ({ searchCriteria, handleInputChange, handleSubmit }) => (
         </div>
 
         <div className="form-group">
-            <label htmlFor="startDate">Date Added After:</label>
+            <label htmlFor="startDate">{'Date Added After:'}</label>
             <DateTimePicker
                 id="startDate"
                 name="startDate"
@@ -62,7 +62,7 @@ const SearchForm = ({ searchCriteria, handleInputChange, handleSubmit }) => (
                 onChange={(value) => handleInputChange({ target: { name: 'startDate', value } })}
             />
 
-            <label htmlFor="endDate">Date Added Before:</label>
+            <label htmlFor="endDate">{'Date Added Before:'}</label>
             <DateTimePicker
                 id="endDate"
                 name="endDate"
@@ -72,7 +72,7 @@ const SearchForm = ({ searchCriteria, handleInputChange, handleSubmit }) => (
         </div>
 
         <div className="form-group">
-            <label htmlFor="postcode">Postcode Area:</label>
+            <label htmlFor="postcode">{'Postcode Area:'}</label>
             <input
                 type="text"
                 id="postcode"
@@ -83,7 +83,7 @@ const SearchForm = ({ searchCriteria, handleInputChange, handleSubmit }) => (
             />
         </div>
 
-        <button type="submit" className="submit-button">Search</button>
+        <button type="submit" className="submit-button">{'Search'}</button>
     </form>
 );
 

@@ -16,10 +16,10 @@ const PropertyDetailPage = ({ properties }) => {
     return (
         <div className="property-details-page">
             <div className="property-header">
-                <h1>{property.type} - {property.location}</h1>
-                <p className="price">Price: £{property.price.toLocaleString()}</p>
-                <p className="bedrooms">Bedrooms: {property.bedrooms}</p>
-                <p className="tenure">Tenure: {property.tenure}</p>
+                <h1>{`${property.type} - ${property.location}`}</h1>
+                <p className="price">{`Price: £${property.price.toLocaleString()}`}</p>
+                <p className="bedrooms">{`Bedrooms: ${property.bedrooms}`}</p>
+                <p className="tenure">{`Tenure: ${property.tenure}`}</p>
             </div>
 
             <div className="property-images">
@@ -50,9 +50,9 @@ const PropertyDetailPage = ({ properties }) => {
                     <div className="features">
                         <h2>Features</h2>
                         <ul>
-                            <li>Bedrooms: {property.bedrooms}</li>
-                            <li>Tenure: {property.tenure}</li>
-                            <li>Location: {property.location}</li>
+                            <li>{`Bedrooms: ${property.bedrooms}`}</li>
+                            <li>{`Tenure: ${property.tenure}`}</li>
+                            <li>{`Location: ${property.location}`}</li>
                         </ul>
                     </div>
                 </TabPanel>

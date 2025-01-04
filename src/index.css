@@ -52,6 +52,12 @@ button:hover {
 }
 
 /* Property List Styles */
+.property-lists{
+    display: flex;
+    gap: 0px;
+    flex-direction: row;
+}
+
 .property-results {
     background-color: white;
     padding: 20px;

@@ -71,7 +71,7 @@ const PropertySearch = ({ setActiveSearch, setFilteredProperties, setErrorMessag
                 handleInputChange={handleInputChange}
                 handleSubmit={handleSubmit}
             />
-            <button onClick={handleReset} className="reset-button">Reset</button>
+            <button onClick={handleReset} className="reset-button">{'Reset'}</button>
         </div>
     );
 };

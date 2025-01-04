@@ -16,7 +16,13 @@ const SearchBar = () => {
 
     useEffect(() => {
         setFilteredProperties(propertiesData.properties);
+        const savedFavourites = JSON.parse(localStorage.getItem('favouriteProperties')) || [];
+        setFavouriteProperties(savedFavourites);
     }, []);
+
+    useEffect(() => {
+        localStorage.setItem('favouriteProperties', JSON.stringify(favouriteProperties));
+    }, [favouriteProperties]);
 
     const handleInputChange = (e) => {
         setSearchText(e.target.value);
@@ -62,14 +68,24 @@ const SearchBar = () => {
         event.preventDefault();
     };
 
+    const handleRemoveDrop = (event) => {
+        const propertyId = event.dataTransfer.getData('propertyId');
+        setFavouriteProperties((prevState) => prevState.filter((fav) => fav.id !== propertyId));
+        event.preventDefault();
+    };
+
     const allowDrop = (event) => {
         event.preventDefault();
+    };
+
+    const clearFavourites = () => {
+        setFavouriteProperties([]);
     };
 
     return (
         <Router>
             <div className="search-bar">
-                <h1>Search Properties</h1>
+                <h1>{'Search Properties'}</h1>
                 {!showAdvancedOptions && (
                     <BasicSearch
                         searchText={searchText}
@@ -110,6 +126,8 @@ const SearchBar = () => {
                                         favourites={favouriteProperties}
                                         onDrop={handleDrop}
                                         onDragOver={allowDrop}
+                                        onRemoveDrop={handleRemoveDrop}
+                                        onClearFavourites={clearFavourites}
                                     />
                                 </>
                             }

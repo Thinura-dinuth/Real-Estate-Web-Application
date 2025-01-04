@@ -13,16 +13,16 @@ export const PropertyResults = ({ properties, onDragStart, onToggleFavourite, fa
                     <h3>{property.type}</h3>
                     <p>{property.location}</p>
                     {property.images.length > 0 && (
-                        <img className="thumbnail" src={property.images[0]} alt={`${property.type} image`} />
+                        <img className="thumbnail" src={`/${property.images[0]}`} alt={`${property.type} image`} />
                     )}
-                    <p>Price: £{property.price}</p>
+                    <p>{`Price: £${property.price}`}</p>
                     <span
                         className={`heart-icon ${favouriteIds.includes(property.id) ? 'favourite' : ''}`}
                         onClick={() => onToggleFavourite(property)}
                     >
-                        ♥
+                        {'♥'}
                     </span>
-                    <Link to={`/property/${property.id}`} className="view-details-button">View Details</Link>
+                    <Link to={`/property/${property.id}`} className="view-details-button">{'View Details'}</Link>
                 </div>
             ))}
         </div>
