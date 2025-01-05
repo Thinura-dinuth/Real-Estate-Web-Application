@@ -1,6 +1,6 @@
 /* General Styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: Poppins, sans-serif;
     background-color: #f4f4f4;
     margin: 0;
     padding: 0;
@@ -52,9 +52,13 @@ button:hover {
 }
 
 /* Property List Styles */
-.property-lists{
+h3,p {
+    margin-bottom: 15px;
+}
+
+.property-lists {
     display: flex;
-    gap: 0px;
+    gap: 20px;
     flex-direction: row;
 }
 
@@ -127,8 +131,8 @@ button:hover {
 }
 
 .thumbnail {
-    width: 400px;
-    height: 300px;
+    width: 100%;
+    height: auto;
     object-fit: cover;
     border-radius: 10px;
 }
@@ -195,41 +199,107 @@ button:hover {
     height: 400px;
 }
 
-.floor-plan {
+.floor-plan-container {
     position: relative;
-    overflow: hidden;
     width: 100%;
-    height: 600px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
+    height: 500px;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin: 1rem 0;
+    overflow: hidden;
+}
+
+.floor-plan-viewport {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+}
+
+.floor-plan-image {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform-origin: center center;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    user-select: none;
+}
+
+.floor-plan-image.zoomable {
     cursor: grab;
 }
 
+.floor-plan-image.dragging {
+    cursor: grabbing;
+}
 
-.floor-plan img {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(1);
-    transition: transform 0.3s ease;
-    max-width: none; /* Prevents the image from being constrained by its container */
+.floor-plan-image {
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease-out;
 }
 
 .zoom-controls {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    z-index: 1;
     display: flex;
-    gap: 5px;
+    flex-direction: column;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 10;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 0.5rem;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .zoom-controls button {
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
+    padding: 0.5rem 1rem;
+    margin-right: 0.5rem;
+    border-radius: 4px;
     border: none;
-    padding: 5px 10px;
     cursor: pointer;
-    border-radius: 5px;
+    font-weight: 500;
+    background-color: #2563eb;
+    color: white;
+    transition: background-color 0.2s;
 }
 
+.zoom-controls button:hover {
+    background-color: #1d4ed8;
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+    .property-lists {
+        flex-direction: column;
+    }
+
+    .property-item {
+        flex: 1 1 100%;
+    }
+
+    .search-bar, .property-results, .favourites-list, .property-details {
+        margin: 10px;
+        padding: 10px;
+    }
+
+    .property-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .property-header .price {
+        font-size: 1.2rem;
+    }
+
+    .property-details-page {
+        padding: 10px;
+    }
+
+    .floor-plan {
+        height: 400px;
+    }
+}

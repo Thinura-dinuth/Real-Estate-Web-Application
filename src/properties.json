@@ -168,6 +168,30 @@
         "day": 18,
         "year": 2024
       }
+    },
+    {
+      "id": "prop8",
+      "type": "Bunglow",
+      "bedrooms": 3,
+      "price": 4300000,
+      "tenure": "Freehold",
+      "description": "This single-storey property, under the same ownership since 1986, offers a desirable blend of comfort and charm in a prime location. It features three bedrooms, two bathrooms, a shower room, and a large reception area. The Baultaup-designed kitchen enhances the modern appeal, while the private front garden and courtyard patio provide excellent outdoor spaces. Situated in a highly sought-after area, this property embodies timeless appeal and convenience.",
+      "location": "Hall Road, St John's Wood, London NW8 9RD",
+      "images": [
+        "src/assets/Prop8/img1.jpeg",
+        "src/assets/Prop8/img2.jpeg",
+        "src/assets/Prop8/img3.jpeg",
+        "src/assets/Prop8/img4.jpeg",
+        "src/assets/Prop8/img5.jpeg",
+        "src/assets/Prop8/img6.jpeg",
+        "src/assets/Prop8/img7.jpeg"
+      ],
+      "floorplan": "src/assets/Prop8/floorplan.jpeg",
+      "added": {
+        "month": "February",
+        "day": 16,
+        "year": 2023
+      }
     }
   ]
 }

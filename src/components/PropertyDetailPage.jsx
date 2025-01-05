@@ -1,23 +1,86 @@
-import { useParams } from 'react-router-dom';
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import 'react-tabs/style/react-tabs.css';
-import PropTypes from 'prop-types';
-import { Carousel } from 'react-responsive-carousel';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import { useState } from 'react';
+import { useParams } from "react-router-dom";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import "react-tabs/style/react-tabs.css";
+import PropTypes from "prop-types";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { useState, useRef, useEffect } from "react";
 
 const PropertyDetailPage = ({ properties }) => {
     const { id } = useParams();
     const property = properties.find((prop) => prop.id === id);
     const [zoom, setZoom] = useState(1);
+    const [position, setPosition] = useState({ x: 0, y: 0 });
+    const [isDragging, setIsDragging] = useState(false);
+    const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+    const imageRef = useRef(null);
+    const containerRef = useRef(null);
 
     if (!property) {
         return <p>Property not found</p>;
     }
 
     const zoomIn = () => setZoom((prevZoom) => Math.min(prevZoom + 0.1, 3));
-    const zoomOut = () => setZoom((prevZoom) => Math.max(prevZoom - 0.1, 0.5));
-    const resetZoom = () => setZoom(1);
+    const zoomOut = () => {
+        setZoom((prevZoom) => {
+            const newZoom = Math.max(prevZoom - 0.1, 1);
+            if (newZoom === 1) {
+                setPosition({ x: 0, y: 0 });
+            }
+            return newZoom;
+        });
+    };
+    const resetZoom = () => {
+        setZoom(1);
+        setPosition({ x: 0, y: 0 });
+    };
+
+    const handleMouseDown = (e) => {
+        if (zoom <= 1) return;
+        e.preventDefault();
+        setIsDragging(true);
+        setDragStart({
+            x: e.clientX - position.x,
+            y: e.clientY - position.y
+        });
+    };
+
+    const handleMouseMove = (e) => {
+        if (!isDragging || zoom <= 1) return;
+
+        const newX = e.clientX - dragStart.x;
+        const newY = e.clientY - dragStart.y;
+
+        const container = containerRef.current;
+        const image = imageRef.current;
+        if (!container || !image) return;
+
+        const containerRect = container.getBoundingClientRect();
+        const imageRect = image.getBoundingClientRect();
+
+        const maxX = (imageRect.width * (zoom - 1)) / 2;
+        const maxY = (imageRect.height * (zoom - 1)) / 2;
+
+        const boundedX = Math.min(Math.max(newX, -maxX), maxX);
+        const boundedY = Math.min(Math.max(newY, -maxY), maxY);
+
+        setPosition({ x: boundedX, y: boundedY });
+    };
+
+    const handleMouseUp = () => {
+        setIsDragging(false);
+    };
+
+    useEffect(() => {
+        if (isDragging) {
+            window.addEventListener('mousemove', handleMouseMove);
+            window.addEventListener('mouseup', handleMouseUp);
+        }
+        return () => {
+            window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('mouseup', handleMouseUp);
+        };
+    }, [isDragging, dragStart, zoom]);
 
     return (
         <div className="property-details-page">
@@ -32,7 +95,10 @@ const PropertyDetailPage = ({ properties }) => {
                 <Carousel showThumbs={false} infiniteLoop useKeyboardArrows autoPlay>
                     {property.images.map((image, index) => (
                         <div key={index}>
-                            <img src={`/${image}`} alt={`${property.type} image ${index + 1}`} />
+                            <img
+                                src={`/${image}`}
+                                alt={`${property.type} image ${index + 1}`}
+                            />
                         </div>
                     ))}
                 </Carousel>
@@ -54,17 +120,22 @@ const PropertyDetailPage = ({ properties }) => {
 
                 <TabPanel>
                     <h2>Floor Plan</h2>
-                    <div className="floor-plan">
-
+                    <div className="floor-plan-container" ref={containerRef}>
                         <div className="zoom-controls">
                             <button onClick={zoomIn}>Zoom In</button>
+                            <button onClick={resetZoom}>Reset</button>
                             <button onClick={zoomOut}>Zoom Out</button>
-                            <button onClick={resetZoom}>Reset Zoom</button>
                         </div>
                         <img
+                            ref={imageRef}
                             src={`/${property.floorplan}`}
                             alt="Floor Plan"
-                            style={{transform: `translate(-50%, -50%) scale(${zoom})`}}
+                            className={`floor-plan-image ${zoom > 1 ? 'zoomable' : ''} ${isDragging ? 'dragging' : ''}`}
+                            style={{
+                                transform: `translate(-50%, -50%) translate(${position.x}px, ${position.y}px) scale(${zoom})`
+                            }}
+                            onMouseDown={handleMouseDown}
+                            draggable={false}
                         />
                     </div>
                 </TabPanel>
@@ -74,10 +145,12 @@ const PropertyDetailPage = ({ properties }) => {
                         <h2>Location</h2>
                         <iframe
                             title="Google Map"
-                            src={`https://www.google.com/maps?q=${encodeURIComponent(property.location)}&output=embed`}
+                            src={`https://www.google.com/maps?q=${encodeURIComponent(
+                                property.location
+                            )}&output=embed`}
                             width="600"
                             height="450"
-                            style={{ border: 0 }}
+                            style={{border: 0}}
                             allowFullScreen=""
                             loading="lazy"
                         ></iframe>
