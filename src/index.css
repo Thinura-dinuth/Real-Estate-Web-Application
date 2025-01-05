@@ -195,14 +195,41 @@ button:hover {
     height: 400px;
 }
 
+.floor-plan {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 600px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    cursor: grab;
+}
 
-.heart-icon {
+
+.floor-plan img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    transition: transform 0.3s ease;
+    max-width: none; /* Prevents the image from being constrained by its container */
+}
+
+.zoom-controls {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 1;
+    display: flex;
+    gap: 5px;
+}
+
+.zoom-controls button {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 5px 10px;
     cursor: pointer;
-    font-size: 1.5rem;
-    color: grey;
-    margin-right: 10px;
+    border-radius: 5px;
 }
 
-.heart-icon.favourite {
-    color: red;
-}

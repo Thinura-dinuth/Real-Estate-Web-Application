@@ -4,14 +4,20 @@ import 'react-tabs/style/react-tabs.css';
 import PropTypes from 'prop-types';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import { useState } from 'react';
 
 const PropertyDetailPage = ({ properties }) => {
     const { id } = useParams();
     const property = properties.find((prop) => prop.id === id);
+    const [zoom, setZoom] = useState(1);
 
     if (!property) {
         return <p>Property not found</p>;
     }
+
+    const zoomIn = () => setZoom((prevZoom) => Math.min(prevZoom + 0.1, 3));
+    const zoomOut = () => setZoom((prevZoom) => Math.max(prevZoom - 0.1, 0.5));
+    const resetZoom = () => setZoom(1);
 
     return (
         <div className="property-details-page">
@@ -35,7 +41,7 @@ const PropertyDetailPage = ({ properties }) => {
             <Tabs>
                 <TabList>
                     <Tab>Description</Tab>
-                    <Tab>Features</Tab>
+                    <Tab>Floor Plan</Tab>
                     <Tab>Location</Tab>
                 </TabList>
 
@@ -47,13 +53,19 @@ const PropertyDetailPage = ({ properties }) => {
                 </TabPanel>
 
                 <TabPanel>
-                    <div className="features">
-                        <h2>Features</h2>
-                        <ul>
-                            <li>{`Bedrooms: ${property.bedrooms}`}</li>
-                            <li>{`Tenure: ${property.tenure}`}</li>
-                            <li>{`Location: ${property.location}`}</li>
-                        </ul>
+                    <h2>Floor Plan</h2>
+                    <div className="floor-plan">
+
+                        <div className="zoom-controls">
+                            <button onClick={zoomIn}>Zoom In</button>
+                            <button onClick={zoomOut}>Zoom Out</button>
+                            <button onClick={resetZoom}>Reset Zoom</button>
+                        </div>
+                        <img
+                            src={`/${property.floorplan}`}
+                            alt="Floor Plan"
+                            style={{transform: `translate(-50%, -50%) scale(${zoom})`}}
+                        />
                     </div>
                 </TabPanel>
 
@@ -84,6 +96,7 @@ PropertyDetailPage.propTypes = {
             location: PropTypes.string.isRequired,
             description: PropTypes.string.isRequired,
             images: PropTypes.arrayOf(PropTypes.string).isRequired,
+            floorplan: PropTypes.string.isRequired,
         })
     ).isRequired,
 };
