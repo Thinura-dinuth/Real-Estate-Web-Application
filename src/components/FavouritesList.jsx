@@ -10,8 +10,11 @@ export const FavouritesList = ({ favourites, onDrop, onDragOver, onRemoveDrop, o
         {favourites.map((property) => (
             <div key={property.id} className="favourite-item" draggable
                  onDragStart={(event) => event.dataTransfer.setData('propertyId', property.id)}>
-                <h3>{property.type}</h3>
-                <p>{property.location}</p>
+                <img className="favourite-thumbnail" src={`/${property.images[0]}`} alt={`${property.type} thumbnail`} />
+                <div className="favourite-details">
+                    <h3>{property.type}</h3>
+                    <p>{property.location}</p>
+                </div>
                 <button onClick={() => onRemoveDrop({
                     dataTransfer: {getData: () => property.id}, preventDefault: () => {
                     }
